@@ -1,0 +1,86 @@
+[debug] [2018-04-07T06:46:50.918Z] ----------------------------------------------------------------------
+[debug] [2018-04-07T06:46:50.921Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2018-04-07T06:46:50.922Z] CLI Version:   3.18.2
+[debug] [2018-04-07T06:46:50.922Z] Platform:      darwin
+[debug] [2018-04-07T06:46:50.922Z] Node Version:  v9.11.1
+[debug] [2018-04-07T06:46:50.922Z] Time:          Sat Apr 07 2018 16:46:50 GMT+1000 (AEST)
+[debug] [2018-04-07T06:46:50.922Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-07T06:46:50.943Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-07T06:46:50.943Z] > authorizing via signed-in user
+[debug] [2018-04-07T06:46:50.946Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/friendlychat-f6b34  
+  
+ Sat Apr 07 2018 16:46:50 GMT+1000 (AEST)
+[debug] [2018-04-07T06:46:51.883Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T06:46:51.884Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/friendlychat-f6b34/tokens  
+  
+ Sat Apr 07 2018 16:46:51 GMT+1000 (AEST)
+[debug] [2018-04-07T06:46:52.789Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'friendlychat-f6b34'...
+[info] 
+[info] i  deploying functions
+[debug] [2018-04-07T06:46:57.256Z] > [functions] package.json contents: {
+  "name": "friendlychat-codelab",
+  "description": "Firebase SDK for Cloud Functions codelab",
+  "dependencies": {
+    "firebase-admin": "~5.11.0",
+    "firebase-functions": "^1.0.0"
+  }
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2018-04-07T06:46:57.257Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/friendlychat-f6b34?view=CONSUMER_VIEW  
+  
+ Sat Apr 07 2018 16:46:57 GMT+1000 (AEST)
+[debug] [2018-04-07T06:46:57.258Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/friendlychat-f6b34?view=CONSUMER_VIEW  
+  
+ Sat Apr 07 2018 16:46:57 GMT+1000 (AEST)
+[debug] [2018-04-07T06:46:59.040Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T06:46:59.055Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: all necessary APIs are enabled
+[debug] [2018-04-07T06:46:59.056Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-f6b34  
+  
+ Sat Apr 07 2018 16:46:59 GMT+1000 (AEST)
+[debug] [2018-04-07T06:47:00.393Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-07T06:47:00.393Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/1007581766719:getServerAppConfig  
+  
+ Sat Apr 07 2018 16:47:00 GMT+1000 (AEST)
+[debug] [2018-04-07T06:47:01.288Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2018-04-07T06:47:01.290Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/friendlychat-f6b34/configs  
+  
+ Sat Apr 07 2018 16:47:01 GMT+1000 (AEST)
+[debug] [2018-04-07T06:47:02.004Z] <<< HTTP RESPONSE 200
+[info] i  functions: packaged functions (40.69 KB) for uploading
+[debug] [2018-04-07T06:47:02.340Z] >>> HTTP REQUEST POST https://cloudfunctions.googleapis.com/v1/projects/friendlychat-f6b34/locations/us-central1/functions:generateUploadUrl  
+  
+ Sat Apr 07 2018 16:47:02 GMT+1000 (AEST)
+[debug] [2018-04-07T06:47:32.707Z] <<< HTTP RESPONSE 503
+[debug] [2018-04-07T06:47:32.707Z] <<< HTTP RESPONSE BODY {
+  "error": {
+    "code": 503,
+    "message": "The service is currently unavailable.",
+    "status": "UNAVAILABLE"
+  }
+}
+
+[debug] [2018-04-07T06:47:32.709Z] TypeError: Cannot create property 'error' on string '{
+  "error": {
+    "code": 503,
+    "message": "The service is currently unavailable.",
+    "status": "UNAVAILABLE"
+  }
+}
+'
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:11:16)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:45:25)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:186:22)
+    at Request.emit (events.js:180:13)
+    at Request.emit (domain.js:422:20)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1163:10)
+    at Request.emit (events.js:180:13)
+    at Request.emit (domain.js:422:20)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1085:12)
+    at Object.onceWrapper (events.js:272:13)
+[error] 
+[error] Error: An unexpected error has occurred.

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 'use strict';
-
 // Initializes FriendlyChat.
 function FriendlyChat() {
   this.checkSetup();
@@ -75,8 +74,8 @@ FriendlyChat.prototype.loadMessages = function() {
     var val = data.val();
     this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
   }.bind(this);
-  this.messagesRef.limitToLast(12).on('child_added', setMessage);
-  this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+  this.messagesRef.limitToLast(24).on('child_added', setMessage);
+  this.messagesRef.limitToLast(24).on('child_changed', setMessage);
 };
 
 // Saves a new message on the Firebase DB.
@@ -84,20 +83,28 @@ FriendlyChat.prototype.saveMessage = function(e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
   if (this.messageInput.value && this.checkSignedInWithMessage()) {
-    var currentUser = this.auth.currentUser;
-    // Add a new message entry to the Firebase Database.
-    this.messagesRef.push({
-      name: currentUser.displayName,
-      text: this.messageInput.value,
-      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
-    }).then(function() {
-      // Clear message text field and SEND button state.
-      FriendlyChat.resetMaterialTextfield(this.messageInput);
-      this.toggleButton();
-    }.bind(this)).catch(function(error) {
-      console.error('Error writing new message to Firebase Database', error);
-    });
-  }
+       var currentUser = this.auth.currentUser;
+
+      var date = new Date();
+      var month = date.getMonth();
+      var day = date.getDate();
+      var hour = date.getHours();
+      var min = date.getMinutes();
+
+      var dateTime = " - " + day + "/" + month + " " + hour + ":" + min;
+      // Add a new message entry to the Firebase Database.
+      this.messagesRef.push({
+        name: currentUser.displayName + dateTime,
+        text: this.messageInput.value,
+        photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+      }).then(function() {
+        // Clear message text field and SEND button state.
+        FriendlyChat.resetMaterialTextfield(this.messageInput);
+        this.toggleButton();
+      }.bind(this)).catch(function(error) {
+        console.error('Error writing new message to Firebase Database', error);
+      });
+   }
 };
 
 // Sets the URL of the given img element with the URL of the image stored in Cloud Storage.
@@ -168,11 +175,31 @@ FriendlyChat.prototype.signIn = function() {
 FriendlyChat.prototype.signOut = function() {
   // Sign out of Firebase.
   this.auth.signOut();
+  message("exit")
 };
+
+function message(n){
+  alert("someone logged In!")
+ }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 FriendlyChat.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
+    var currentUser = this.auth.currentUser;
+    console.log("--------------------")
+    console.log("CLEAR")
+    let email = currentUser.email;
+    console.log(currentUser.email)
+    console.log("DISPLAY NAME" + currentUser.displayName)
+    console.log("CLEAR")
+    console.log("--------------------")
+    var end = email.split("@");
+
+    if(end == "cgs.act.edu.au" || "cggs.act.edu.au"){
+       this.loadMessages();
+    }
+    console.log(end)
+    message("login");
     // Get profile pic and user's name from the Firebase user object.
     var profilePicUrl = user.photoURL;
     var userName = user.displayName;
@@ -190,7 +217,7 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
     this.signInButton.setAttribute('hidden', 'true');
 
     // We load currently existing chant messages.
-    this.loadMessages();
+   
 
     // We save the Firebase Messaging Device token and enable notifications.
     this.saveMessagingDeviceToken();
@@ -259,7 +286,7 @@ FriendlyChat.resetMaterialTextfield = function(element) {
 FriendlyChat.MESSAGE_TEMPLATE =
     '<div class="message-container">' +
       '<div class="spacing"><div class="pic"></div></div>' +
-      '<div class="message"></div>' +
+      '<div class="message is-danger"></div>' +
       '<div class="name"></div>' +
     '</div>';
 
@@ -269,6 +296,7 @@ FriendlyChat.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 // Displays a Message in the UI.
 FriendlyChat.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
   var div = document.getElementById(key);
+
   // If an element for that message does not exists yet we create it.
   if (!div) {
     var container = document.createElement('div');
@@ -320,6 +348,10 @@ FriendlyChat.prototype.checkSetup = function() {
   }
 };
 
+
+
+
 window.onload = function() {
   window.friendlyChat = new FriendlyChat();
 };
+
